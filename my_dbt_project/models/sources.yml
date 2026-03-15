@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: strava_raw
+    database: FIVETRAN_DATABASE
+    schema: S3
+    tables:
+      - name: ACTIVITIES
+
+  - name: mfp_raw
+    database: FIVETRAN_DATABASE
+    schema: PUBLIC
+    tables:
+      - name: MFP_NUTRITION_RAW
+      - name: MFP_EXERCISE_RAW
+      - name: MFP_MEASUREMENTS_RAW

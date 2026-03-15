@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: strava-pipeline
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: strava-pipeline
+              image: strava-pipeline:latest
+              imagePullPolicy: Never
+              env:
+                - name: AWS_DEFAULT_REGION
+                  value: "us-east-2"
+                - name: S3_BUCKET
+                  value: "fitness-data-pipeline"
+              volumeMounts:
+                - name: aws-creds
+                  mountPath: /root/.aws
+                  readOnly: true
+          restartPolicy: OnFailure
+          volumes:
+            - name: aws-creds
+              hostPath:
+                path: /Users/ashleyhoward/.aws
